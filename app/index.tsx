@@ -14,8 +14,14 @@ const GET_CATEGORIES = gql`
   }
 `;
 
+interface Category {
+    id: string;
+    name: string;
+    description: string;
+}
+
 export default function CategoriesScreen() {
-    const { loading, error, data } = useQuery(GET_CATEGORIES);
+    const { loading, error, data } = useQuery < { categories: Category[] } > (GET_CATEGORIES);
     const router = useRouter();
 
     console.log('Loading:', loading);
@@ -28,7 +34,7 @@ export default function CategoriesScreen() {
     return (
         <View style={styles.container}>
             <FlatList
-                data={data.categories}
+                data={data?.categories}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <ListItem bottomDivider>

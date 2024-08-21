@@ -16,11 +16,17 @@ const GET_PRODUCTS = gql`
   }
 `;
 
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  features: Record<string, any>;
+}
+
 export default function ProductsScreen() {
-    const { categoryId } = useLocalSearchParams();
-    const { loading, error, data } = useQuery(GET_PRODUCTS, {
-        variables: { categoryId },
-    });
+    const { categoryId } = useLocalSearchParams<{ categoryId: string }>();
+    const { loading, error, data } = useQuery<{ products: Product[] }>(GET_PRODUCTS, { variables: { categoryId },});
 
     if (loading) return <View style={styles.center}><Text>Loading...</Text></View>;
     if (error) return <View style={styles.center}><Text>Error: {error.message}</Text></View>;
@@ -28,7 +34,7 @@ export default function ProductsScreen() {
     return (
         <View style={styles.container}>
             <FlatList
-                data={data.products}
+                data={data?.products}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <ListItem bottomDivider>
