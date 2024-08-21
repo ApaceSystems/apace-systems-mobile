@@ -1,2 +1,2 @@
 # apace-systems-mobile
-Elevator Parts Manufacture - Mobile App 
+Cross-Platform Mobile App for Apace Systems - Elevator components manufacturer.
